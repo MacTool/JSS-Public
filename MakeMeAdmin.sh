@@ -148,21 +148,6 @@ EOF)
 exit 0
 }
 
-# send email notification if netwok is up
-# this will be moved to a launchd item later for offline admin access
-
-# isUp=down
-# 	
-# while [ $isUp == "down" ] ;
-# do
-# 	if ping -c 1 128.210.17.127; then
-# 		isUp=up
-# 		( echo "Subject: Temp Admin rights granted on $compName"; echo; echo "Please assign to AgIT Support for record keeping. Temporary Admin rights have been granted via Self Service on $compName to $tmpAdmin for the following reason: $admReason" ) | sendmail -f "$compName@purdue.edu" "agithelp@purdue.edu"
-# 	else 
-# 		isUp=down
-# 		sleep 300
-# 	fi
-# done
 
 #################################
 #
