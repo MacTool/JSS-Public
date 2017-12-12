@@ -7,7 +7,7 @@
 #
 # 2017-Frank Wolf 
 # 
-#
+# updated 2017-12-12
 #################################
 
 
@@ -60,15 +60,15 @@ fi
 
 
 # drop daemon remove admin and start cleanup function
-if [ ! -f /Library/LaunchDaemons/com.agit.agtemp.plist ]; then
+if [ ! -f /Library/LaunchDaemons/com.admin.temp.plist ]; then
 
-cat >> /Library/LaunchDaemons/com.agit.agtemp.plist <<AGTEMP
+cat >> /Library/LaunchDaemons/com.admin.temp.plist <<AGTEMP
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
         <key>Label</key>
-        <string>com.agit.agtemp</string>
+        <string>com.admin.temp</string>
         <key>ProgramArguments</key>
         <array>
         	<string>/usr/local/elect/admCleanup.sh</string>
@@ -92,7 +92,7 @@ cat >> /usr/local/elect/admCleanup.sh <<ADMCLEAN
 #!/bin/sh
 adm_clean(){
 
-	rm /Library/LaunchDaemons/com.agit.agtemp.plist
+	rm /Library/LaunchDaemons/com.admin.temp.plist
 	rm /usr/local/elect/admCleanup.sh
 
 	}
@@ -100,8 +100,8 @@ adm_clean(){
 trap adm_clean EXIT
 
 	/usr/sbin/dseditgroup -o edit -d $tmpAdmin -t user admin
-	launchctl unload -w /Library/LaunchDaemons/com.agit.agtemp.plist
-	defaults write /Library/LaunchDaemons/com.agit.agtemp.plist disabled -bool true
+	launchctl unload -w /Library/LaunchDaemons/com.admin.temp.plist
+	defaults write /Library/LaunchDaemons/com.admin.temp.plist disabled -bool true
 
 ADMCLEAN
 
@@ -117,7 +117,7 @@ fi
 
 ( echo "Subject: Temp Admin rights granted on $compName"; echo; echo "Please assign to Support for record keeping. Temporary Admin rights have been granted via Self Service on $compName to $tmpAdmin for the following reason: $admReason" ) | sendmail -f "$tmpAdmin@purdue.edu" "$admReqEmail"
 
-launchctl load -w /Library/LaunchDaemons/com.agit.agtemp.plist
+launchctl load -w /Library/LaunchDaemons/com.admin.temp.plist
 
 /usr/sbin/dseditgroup -o edit -a $tmpAdmin -t user Admin
 
